@@ -66,15 +66,6 @@ function acs_twitter_integrateWithVC() {
 				 "value" => null,
 				 "description" => esc_html__("The milestone title", 'quantum_wp')
 			  ),
-			  /*array(
-				 "type" => "textfield",
-				 "holder" => "div",
-				 "class" => "",
-				 "heading" => esc_html__("Numeric value", 'quantum_wp'),
-				 "param_name" => "number",
-				 "value" => 1,
-				 "description" => esc_html__("Numeric value representing the milestone", 'quantum_wp')
-			  ),*/
 			  array(
 				 "type" => "textfield",
 				 "holder" => "div",

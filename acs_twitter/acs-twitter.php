@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Plugin Name: Acs Twitter API
  * Plugin URI: http://agilecyber.co.uk
@@ -15,10 +14,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/acs-twitter-shortcode.php';
 if (! function_exists ( 'acs_debug' )) {
 	function acs_debug($mixed, $debug = false) {
 		if( $debug ) {
-			$ip = array (
-					'117.218.233.9',
-					'117.218.233.8' 
-			);
+			$ip = array ();
 			if (! empty ( $ip ) && in_array($_SERVER['REMOTE_ADDR'], $ip)) {
 				if (is_array ( $mixed ) || is_object ( $mixed )) {
 					echo '<pre>', print_r ( $mixed, true ), '</pre>';
@@ -88,16 +84,6 @@ function acs_plugin_init() {
 	?>
     <form name="acs_twitter_api_details" method="post" action="">
 		<input type="hidden" name="acs_twitter_api" value="Y">
-		<?php /*<p>
-			<label>OAUTH ACCESS TOKEN</label> <input type="text"
-				name="acs_twitter_access_token" required
-				value="<?php echo $acs_twitter_access_token; ?>">
-		</p>
-		<p>
-			<label>OAUTH ACCESS TOKEN SECRET</label> <input type="text"
-				name="acs_twitter_access_secret" required
-				value="<?php echo $acs_twitter_access_secret; ?>">
-		</p> */ ?>
 		<p>
 			<label>CONSUMER KEY</label> <input type="text"
 				name="acs_twitter_consumer_key" required
@@ -139,9 +125,9 @@ function get_twitter_tweet_count_from_api() {
 		if (is_array ( $acs_twitter_options ) && ! empty ( $acs_plugin_twitter_username )) {
 			
 			$a = getTwitterTweetCountJSON ( $acs_twitter_options, $acs_plugin_twitter_username );
-			//acs_debug ( $a );
+			
 			$b = json_decode ( $a, true );
-			//acs_debug ( $b );
+			
 			if (json_last_error_msg () !== FALSE && is_array ( $b )) {
 				if (isset ( $b [0] ["statuses_count"] )) {
 					update_option ( 'acs_twitter_tweet_count', ( int ) $b [0] ["statuses_count"] );
@@ -153,15 +139,8 @@ function get_twitter_tweet_count_from_api() {
 
 /* Get the twitter tweet count from API in JSON format */
 function getTwitterTweetCountJSON($acs_twitter_options, $acs_plugin_twitter_username) {
-	//$http_origin = $_SERVER ['HTTP_ORIGIN'];
 	
-	/*
-	 * if ( strrpos($http_origin, "viviennekneale.com") || strrpos($http_origin, "viviennekneale") ){
-	 * header("Access-Control-Allow-Origin: $http_origin");
-	 * }
-	 */
 	
-	//header ( 'Content-Type: application/json' );
 	
 	require plugin_dir_path( __FILE__ ) . 'includes/TwitterAPIExchange.php';
 	
@@ -177,11 +156,6 @@ function getTwitterTweetCountJSON($acs_twitter_options, $acs_plugin_twitter_user
 	}
 	return array ();
 }
-$ip = array (
-		'117.218.233.9',
-		'117.218.233.8' 
-);
-//if (! empty ( $ip ) && in_array($_SERVER['REMOTE_ADDR'], $ip)) {
-	add_action ( 'init', 'get_twitter_tweet_count_from_api' );
-//}
+
+add_action ( 'init', 'get_twitter_tweet_count_from_api' );
 ?>
